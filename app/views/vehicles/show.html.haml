@@ -1,0 +1,29 @@
+%p#notice= notice
+
+%p
+  %b Make:
+  = @vehicle.make
+%p
+  %b Vehicle model:
+  = @vehicle.vehicle_model
+%p
+  %b Year:
+  = @vehicle.year
+%p
+  %b Color:
+  = @vehicle.color
+%p
+  %b Cost:
+  = @vehicle.cost
+%p
+  %b Markup:
+  = @vehicle.markup
+%p
+  %b Options:
+  - @vehicle.options.each do |option|
+    = option.name
+    %br
+
+= link_to 'Edit', edit_vehicle_path(@vehicle)
+\|
+= link_to 'Back', vehicles_path

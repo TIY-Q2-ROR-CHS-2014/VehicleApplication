@@ -1,0 +1,32 @@
+= form_for @vehicle, html: {role: "form", class: "form-horizontal"} do |f|
+  - if @vehicle.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@vehicle.errors.count, "error")} prohibited this vehicle from being saved:"
+      %ul
+        - @vehicle.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :make, class: "col-lg-2"
+    .col-lg-10
+      = f.select :make, options_for_select(Vehicle::MAKE, @vehicle.make), include_blank: "--- Select ---"
+  .form-group
+    = f.label :vehicle_model
+    = f.text_field :vehicle_model
+  .form-group
+    = f.label :year
+    = f.select :year, options_for_select((Time.zone.now.year - 100)..(Time.zone.now.year + 1), @vehicle.year || Time.zone.now.year )
+  .form-group
+    = f.label :color
+    = f.text_field :color
+  .form-group
+    = f.label :cost
+    = f.text_field :cost
+  .form-group
+    = f.label :markup
+    = f.text_field :markup
+  .form-group
+    - @options.each do |option|
+      = check_box_tag "vehicle[option_ids][]", option.id, @vehicle.options.map(&:id).include?(option.id), id: "option_#{option.id}"
+      = label_tag "option_#{option.id}", option.name
+  = f.submit 'Save', class: "btn btn-default"

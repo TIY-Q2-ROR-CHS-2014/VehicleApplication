@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  option_type: MyString
+  name: MyString
+  cost: 1.5
+  markup: 1.5
+
+two:
+  option_type: MyString
+  name: MyString
+  cost: 1.5
+  markup: 1.5
