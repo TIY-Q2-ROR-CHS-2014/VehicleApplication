@@ -11,6 +11,6 @@
  * file per style scope.
  *
  *= require_tree .
- *= require jumbotron_narrow
+ *= require bootstrap
  *= require_self
  */

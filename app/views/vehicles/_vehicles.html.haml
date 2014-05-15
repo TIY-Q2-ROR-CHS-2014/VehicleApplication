@@ -1,0 +1,30 @@
+%table.table.table-hover.vehicles
+  %tr
+    %th Make
+    %th Model
+    %th Year
+    %th Color
+    %th Cost
+    - if can? :manage, Vehicle
+      %th Markup
+    %th Availability
+    %th
+    %th
+    %th
+    %th
+
+  - @vehicles.each do |vehicle|
+    %tr{class: "#{availability_class(vehicle)} vehicle_#{vehicle.id}" }
+      %td= vehicle.make
+      %td= vehicle.vehicle_model
+      %td= vehicle.year
+      %td= vehicle.color
+      %td= vehicle.cost
+      %td= vehicle.markup if can? :manage, Vehicle
+      %td.workflow_state= display_availability(vehicle)
+      %td= link_to 'Show', vehicle
+      %td= link_to 'Edit', edit_vehicle_path(vehicle) if can? :manage, Vehicle
+      %td= link_to 'Destroy', vehicle, :method => :delete, :data => { :confirm => 'Are you sure?' } if can? :manage, Vehicle
+      - if can? :manage, Vehicle
+        %td
+          = select_tag "workflow[#{vehicle.id}]", options_for_select(Vehicle::AVAILABLE_STATES), prompt: "--- Select ---", update_url: vehicle_path(vehicle)

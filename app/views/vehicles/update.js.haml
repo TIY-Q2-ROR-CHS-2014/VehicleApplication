@@ -1,0 +1,3 @@
+$(".vehicle_#{@vehicle.id}").toggleClass("success");
+$(".vehicle_#{@vehicle.id}").toggleClass("warning");
+$(".vehicle_#{@vehicle.id} td.workflow_state").html("#{display_availability(@vehicle)}")

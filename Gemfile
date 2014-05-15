@@ -39,5 +39,9 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 gem 'haml-rails'
-gem "twitter-bootstrap-rails"
+# We are including this manually now
+# gem "twitter-bootstrap-rails"
 gem "quiet_assets"
+gem 'devise'
+gem "cancan"
+gem "workflow"

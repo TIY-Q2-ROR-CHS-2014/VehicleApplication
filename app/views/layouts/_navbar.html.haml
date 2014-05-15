@@ -5,3 +5,9 @@
     = link_to "Karz", vehicles_path
   %li{ class: active_tab("options") }
     = link_to "Optiiiinz", options_path
+  - if current_user
+    %li
+      = link_to "Logout", destroy_user_session_path, method: :delete
+  - else
+    %li{ class: active_tab("devise/sessions") }
+      = link_to "Login", new_user_session_path

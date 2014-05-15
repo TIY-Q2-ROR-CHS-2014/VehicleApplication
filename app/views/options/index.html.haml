@@ -5,7 +5,8 @@
     %th Option type
     %th Name
     %th Cost
-    %th Markup
+    - if can? :manage, Option
+      %th Markup
     %th
     %th
     %th
@@ -15,11 +16,12 @@
       %td= option.option_type
       %td= option.name
       %td= option.cost
-      %td= option.markup
+      - if can? :manage, Option
+        %td= option.markup
       %td= link_to 'Show', option
-      %td= link_to 'Edit', edit_option_path(option)
-      %td= link_to 'Destroy', option, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to 'Edit', edit_option_path(option) if can? :manage, Option
+      %td= link_to 'Destroy', option, :method => :delete, :data => { :confirm => 'Are you sure?' } if can? :manage, Option
 
 %br
 
-= link_to 'New Option', new_option_path
+= link_to 'New Option', new_option_path if can? :manage, Option

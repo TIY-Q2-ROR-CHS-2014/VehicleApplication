@@ -1,10 +1,21 @@
 class VehiclesController < ApplicationController
+  load_and_authorize_resource
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :find_vehicle, only: [:show, :edit, :update, :destroy]
 
   # GET /vehicles
   # GET /vehicles.json
   def index
-    @vehicles = Vehicle.all
+    @vehicles = if params[:q]
+      Vehicle.search_vehicles params[:q]
+    else
+      Vehicle.all
+    end
+
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   # GET /vehicles/1
@@ -46,6 +57,7 @@ class VehiclesController < ApplicationController
       if @vehicle.update(vehicle_params)
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
         format.json { render :show, status: :ok, location: @vehicle }
+        format.js
       else
         format.html { render :edit }
         format.json { render json: @vehicle.errors, status: :unprocessable_entity }
@@ -78,7 +90,8 @@ class VehiclesController < ApplicationController
         :color,
         :cost,
         :markup,
-        {option_ids: [] } 
+        {option_ids: [] },
+        :workflow_state 
       )
     end
 end

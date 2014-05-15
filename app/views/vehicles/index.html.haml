@@ -1,29 +1,10 @@
 %h1 Listing vehicles
-
-%table.table.table-hover
-  %tr
-    %th Make
-    %th Vehicle model
-    %th Year
-    %th Color
-    %th Cost
-    %th Markup
-    %th
-    %th
-    %th
-
-  - @vehicles.each do |vehicle|
-    %tr
-      %td= vehicle.make
-      %td= vehicle.vehicle_model
-      %td= vehicle.year
-      %td= vehicle.color
-      %td= vehicle.cost
-      %td= vehicle.markup
-      %td= link_to 'Show', vehicle
-      %td= link_to 'Edit', edit_vehicle_path(vehicle)
-      %td= link_to 'Destroy', vehicle, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
+= form_tag vehicles_path, method: :get, remote: true
+= text_field_tag 'q', '', placeholder: "Search Vehicles"
+= submit_tag "Search", class: "btn btn-primary"
+%br
+%br
+= render "vehicles"
 %br
 
-= link_to 'New Vehicle', new_vehicle_path
+= link_to 'New Vehicle', new_vehicle_path if can? :manage, Vehicle
