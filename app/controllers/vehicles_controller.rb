@@ -1,11 +1,11 @@
 class VehiclesController < ApplicationController
-  load_and_authorize_resource
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_vehicle, only: [:show, :edit, :update, :destroy]
 
   # GET /vehicles
   # GET /vehicles.json
   def index
+    authorize! :read, Vehicle
     @vehicles = if params[:q]
       Vehicle.search_vehicles params[:q]
     else
@@ -21,22 +21,26 @@ class VehiclesController < ApplicationController
   # GET /vehicles/1
   # GET /vehicles/1.json
   def show
+    authorize! :read, Vehicle
   end
 
   # GET /vehicles/new
   def new
+    authorize! :manage, Vehicle
     @vehicle = Vehicle.new
     @options = Option.all
   end
 
   # GET /vehicles/1/edit
   def edit
+    authorize! :manage, Vehicle
     @options = Option.all
   end
 
   # POST /vehicles
   # POST /vehicles.json
   def create
+    authorize! :manage, Vehicle
     @vehicle = Vehicle.new(vehicle_params)
 
     respond_to do |format|
@@ -53,6 +57,7 @@ class VehiclesController < ApplicationController
   # PATCH/PUT /vehicles/1
   # PATCH/PUT /vehicles/1.json
   def update
+    authorize! :manage, Vehicle
     respond_to do |format|
       if @vehicle.update(vehicle_params)
         format.html { redirect_to @vehicle, notice: 'Vehicle was successfully updated.' }
@@ -68,6 +73,7 @@ class VehiclesController < ApplicationController
   # DELETE /vehicles/1
   # DELETE /vehicles/1.json
   def destroy
+    authorize! :manage, Vehicle
     @vehicle.destroy
     respond_to do |format|
       format.html { redirect_to vehicles_url, notice: 'Vehicle was successfully destroyed.' }
